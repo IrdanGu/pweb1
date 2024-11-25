@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search mahasiswa</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      input[type="text"] {
+        padding: 10px;
+        margin: 10px 0;
+        width: 200px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        padding: 5px;
+        margin: 5px 0;
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>cari nama alumni</h2>
+    <input
+      type="text"
+      id="searchBox"
+      placeholder="cari nama atau jurusan"
+      oninput="searchJurusan()"
+    />
+
+    <h3>Daftar Nama</h3>
+    <ul id="studentList"></ul>
+
+    <script>
+      const students = {
+        SI: ["Alice", "Bob", "Charlie", "David"],
+        TI: ["Eve", "Frank", "Grace", "Hannah"],
+        DKV: ["Haya", "Kalo", "Haru", "Henna"],
+      };
+
+      function searchJurusan() {
+        const searchValue = document
+          .getElementById("searchBox")
+          .value.toLowerCase();
+        const studentList = document.getElementById("studentList");
+
+        studentList.innerHTML = ""; // Clear previous list
+
+        if (searchValue === "") return; // If input is empty, do nothing
+
+        // Check if the search value matches any jurusan
+        // to do add search by name
+        for (const className in students) {
+          if (className.toLowerCase().includes(searchValue)) {
+            const selectedClassStudents = students[className];
+            selectedClassStudents.forEach((student) => {
+              const li = document.createElement("li");
+              li.textContent = student;
+              studentList.appendChild(li);
+            });
+            return; // Stop after finding the first match
+          }
+        }
+        // Check if the search value matches any student name
+        for (const className in students) {
+          const selectedClassStudents = students[className];
+          selectedClassStudents.forEach((student) => {
+            if (student.toLowerCase().includes(searchValue)) {
+              const li = document.createElement("li");
+              li.textContent = student + " (" + className + ")";
+              studentList.appendChild(li);
+            }
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
